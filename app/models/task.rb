@@ -15,7 +15,7 @@ class Task < ApplicationRecord
     state :released
     state :archived
 
-    event :development do
+    event :develop do
       transition to: :in_development, from: %i[new_task in_qa in_code_review]
     end
 
@@ -23,15 +23,15 @@ class Task < ApplicationRecord
       transition to: :archived, from: %i[new_task released]
     end
 
-    event :qa do
+    event :development_finish do
       transition in_development: :in_qa
     end
 
-    event :code_review do
+    event :qa_finish do
       transition in_qa: :in_code_review
     end
 
-    event :ready_release do
+    event :approve do
       transition in_code_review: :ready_for_release
     end
 
